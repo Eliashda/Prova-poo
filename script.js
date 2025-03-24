@@ -136,16 +136,24 @@ class Cobra extends Entidade {
 }
 
 class Comida extends Entidade {
-   constructor() {
-       super(Math.random() * (canvas.width - 20),Math.random() * (canvas.height - 20),20,20
-       );
-   }
-   
-   desenhar() {
-       ctx.fillStyle = 'red';
-       ctx.fillRect(this.x, this.y, this.largura, this.altura);
-   }
-}
+    constructor() {
+        super(Math.random() * (canvas.width - 65), Math.random() * (canvas.height - 65), 65, 65);
+        this.imagem = new Image();
+        this.imagem.src = 'static/apple.png';
+        this.imagem.onerror = () => {
+            this.usarImagem = false;
+        };
+        this.usarImagem = true;
+    }
+    desenhar() {
+        if (this.usarImagem && this.imagem.complete) {
+            ctx.drawImage(this.imagem, this.x, this.y, this.largura, this.altura);
+        } else {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.x, this.y, this.largura, this.altura);
+        }
+    }
+ }
 const cobra = new Cobra(100, 200, 20, 20);
 const comida = new Comida();
 
